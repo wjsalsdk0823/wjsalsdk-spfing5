@@ -1,0 +1,89 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="4ADFC502-5FD2-12BE-06A1-2A8017E8E8A8" name="TBL_ATTACH">
+<createdBy>wjsal</createdBy>
+<createdTime>2021-05-31 04:57:44 UTC</createdTime>
+<commentInRDBMS><![CDATA[첨부파일관리테이블]]></commentInRDBMS>
+<ownerDesignName>SPRING5</ownerDesignName>
+<ordsAlias>table_6</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="SAVE_FILE_NAME" id="77C20CAE-A0B7-AF1D-F2AF-5025D1E8C57C">
+<createdBy>wjsal</createdBy>
+<createdTime>2021-05-31 04:59:57 UTC</createdTime>
+<commentInRDBMS><![CDATA[물리적으로저장되는파일명(해시데이터)]]></commentInRDBMS>
+<ownerDesignName>SPRING5</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="REAL_FILE_NAME" id="0D4F63EE-37AB-3BEB-E96F-73661557A06E">
+<createdBy>wjsal</createdBy>
+<createdTime>2021-05-31 05:03:26 UTC</createdTime>
+<commentInRDBMS><![CDATA[한글파일명으로UI에서보이게]]></commentInRDBMS>
+<ownerDesignName>SPRING5</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="REG_DATE" id="BDA835CA-97FB-10DB-B985-E2DFE7B5F301">
+<createdBy>wjsal</createdBy>
+<createdTime>2021-05-31 05:04:29 UTC</createdTime>
+<commentInRDBMS><![CDATA[등록일자]]></commentInRDBMS>
+<ownerDesignName>SPRING5</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="BNO" id="9EE802C6-EB86-BF90-C496-11B2D9160354">
+<createdBy>wjsal</createdBy>
+<createdTime>2021-05-31 05:07:36 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>11</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="DDE691F5-CF83-52A3-AEF4-6686DE9D6C77" referredColumn="BC172DCB-F552-98F7-F9AF-4FC12EF3C597"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="8FA7023D-F681-D5D1-FC6D-BFCDAB8C4AA2" name="TBL_ATTACH_PK">
+<createdBy>wjsal</createdBy>
+<createdTime>2021-05-31 05:00:21 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="77C20CAE-A0B7-AF1D-F2AF-5025D1E8C57C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="14CC7957-5A05-D475-1409-E3C23B1E32CA" name="TBL_ATTACH_TBL_BOARD_FK">
+<createdBy>wjsal</createdBy>
+<createdTime>2021-05-31 05:07:36 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="9EE802C6-EB86-BF90-C496-11B2D9160354"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

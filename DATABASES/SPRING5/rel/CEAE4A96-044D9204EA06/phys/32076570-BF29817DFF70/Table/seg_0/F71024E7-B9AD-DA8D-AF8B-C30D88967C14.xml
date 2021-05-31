@@ -1,0 +1,66 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="TBL_MEMBER" directorySegmentName="seg_0" id="F71024E7-B9AD-DA8D-AF8B-C30D88967C14">
+<createdBy>wjsal</createdBy>
+<createdTime>2021-05-31 05:36:59 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="USER_PW" id="07CAB236-99AB-F076-B6FA-D74B421442DB">
+<createdBy>wjsal</createdBy>
+<createdTime>2021-05-31 05:36:59 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="POINT" id="0D0DA6D8-A645-9D5B-9493-57B7D7196388">
+<createdBy>wjsal</createdBy>
+<createdTime>2021-05-31 05:36:59 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="USER_ID" id="21276A74-8EC4-5482-C7DA-E2D9A22B98C1">
+<createdBy>wjsal</createdBy>
+<createdTime>2021-05-31 05:36:59 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="EMAIL" id="27B60364-3479-F637-8553-D84FF2503B24">
+<createdBy>wjsal</createdBy>
+<createdTime>2021-05-31 05:36:59 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="REG_DATE" id="350D550A-D590-F180-B49D-ACA04C05FFF2">
+<createdBy>wjsal</createdBy>
+<createdTime>2021-05-31 05:36:59 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="LEVELS" id="45FEB599-8ED0-CF93-1061-02B59C6A062F">
+<createdBy>wjsal</createdBy>
+<createdTime>2021-05-31 05:36:59 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="USER_NAME" id="52521B50-2AB7-0D75-CE60-043C8E7E1EC1">
+<createdBy>wjsal</createdBy>
+<createdTime>2021-05-31 05:36:59 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ENABLED" id="8CE32CD8-F39F-E60C-1F18-8D59091EFE3F">
+<createdBy>wjsal</createdBy>
+<createdTime>2021-05-31 05:36:59 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="UPDATE_DATE" id="C35F6A48-7F93-C036-80A7-A8A5AB951856">
+<createdBy>wjsal</createdBy>
+<createdTime>2021-05-31 05:36:59 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="TBL_MEMBER_PK" id="836A601D-B2FD-4DD3-BD17-7F7CD6596370">
+<createdBy>wjsal</createdBy>
+<createdTime>2021-05-31 05:36:59 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+<indexSort>SORTED</indexSort>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

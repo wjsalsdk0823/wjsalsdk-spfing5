@@ -1,6 +1,15 @@
 ####20210531
+-오라클: 테이블스페이스(TableSpace)=(Scheme:Mysql)=데이터베이스(DB-
+MS-SQL)
+-EntityRelationDiagram(ERD-객체관계):Entity=테이블
+-데이터 모델:Model Object를 형상화 시킨것을 모델이라고함
+-MVC 스프링프로젝트에서 Mdl MOdel이고, 스프링 프로젝트 구성중에 DB를 가리킴
+-참고로 V는View고 jsp를 말함
+-참고로 C는Controller고 클래스를 말함
+-EX라는 테이블스페이스를 EX사용자료
 -스프링프로젝트 ERD 제작 후 , 게시판UI디자인 적용
 -4장 패키지와 예외처리 실습
+
 
 ####20210528(금) 
 -extends관계클래스에서 this현재클래스,super부모클래스
