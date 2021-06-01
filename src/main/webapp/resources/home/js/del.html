@@ -1,0 +1,32 @@
+ <!--제이쿼리 콩 임포트 불러오기-->
+
+ <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    
+ <script src="./json.js"></script>
+ <script>
+ /*외부 js 파일의 json 데이터를 body태그안의 #*/
+     console.log(jsonData);
+     //jsonDate 파싱해서 #board 영역에 동적으로 출력
+     $(document).ready(function(){
+         //jsondate 1개씩 뽑아서 화면에 table>er>td에 출력하게 합니다.
+         //append는 가상선택자의 arter와 같음. 기준영역의 다음을 말합니다.
+         for(var i=0;i<jsonData.length;i++) {
+             $('#board tbody').append('<tr>');
+             $('#board tbody').append('<td style="text-align:center;">'+(i+1)+'</td>');
+             $('#board tbody').append('<td>'+ jsonData[i]['_id']+'</td>');
+             $('#board tbody').append('<td>'+ jsonData[i]['age']+'</td>');
+             $('#board tbody').append('<td>'+ jsonData[i]['eyeColor']+'</td>');
+             $('#board tbody').append('<td>'+ jsonData[i]['name']+'</td>');
+             $('#board tbody').append('</tr>');            
+         }
+     });
+ </script>
+ <body>
+    <table id="board">
+     <tr>
+         <th>NO</th>
+       <th>id</th>
+       <th>age</th>  
+       <th>eyeColor</th>
+       <th>name</th>
+    <tbody>s

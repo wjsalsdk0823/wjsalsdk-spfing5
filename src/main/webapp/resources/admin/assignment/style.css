@@ -1,0 +1,28 @@
+.display {
+    background-color:green;
+    padding: 15px;
+    width: 250px;
+    text-align: right;
+    font-size: 20px;
+    border-top-left-radius:10px;
+    border-top-right-radius: 10px;
+    /*border-radius -> 둥근 모서리 css 스타일(상단 왼쪽부터 시계방향으로)*/
+    color: white;
+}
+
+button {
+    padding: 10px;
+    width: 67px;
+    height: 45px;
+    margin-top: 10px;
+    background-color: green;
+    color: white;
+    font-size: 20px;
+}
+button:hover {/*hover : 커서가 요소 위에 올라가 있을 때 작동*/
+    cursor: pointer;/*cursor: 커서 모양*/
+    background-color:grey;
+}
+button:active {
+    background-color: grey;
+}
