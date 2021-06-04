@@ -33,9 +33,17 @@ SELECT * FROM emp WHERE ename LIKE '%N';
 SELECT * FROM emp WHERE comm IS NULL;
 --NVL(null value)널 값을 대치하는 함수
 --사원중에 커미션을 0원 받은 사람은? null사람도 구하려면
-SELECT nvl2(comm,100,0), E.* FROM emp E WHERE NVL(comm,0) = 0;
+SELECT 
+nvl2(comm,100,0), E.* FROM emp E WHERE NVL(comm,0) = 0;
 --오라클은 표준쿼리x ANSI 쿼리 표준입니다.
-SELECT DECODE(comm,null,0,100),NVL2(comm,100,0), E.* FROM emp E WHERE NVL(comm,0) = 0;
+SELECT 
+CASE WHEN comm is null THEN 0 
+WHEN comm = 0 THEN 100
+WHEN comm > 0 THEN comm 
+END  AS "CASE출력문"
+,DECODE(comm,null,0,100)
+,NVL2(comm,100,0)
+, E.* FROM emp E; -- WHERE NVL(comm,0) = 0;
 --정렬 sort,순서 order by 필드명 오름차순[초기값]\내림차순
 --서브쿼리?(select쿼리가 중복되어있는)입니다.
 SELECT ROWNUM,E.* FROM (-- 테이블명
