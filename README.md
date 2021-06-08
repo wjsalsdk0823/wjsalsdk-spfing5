@@ -1,15 +1,50 @@
-####20210607
+####20210608화
+페이징에 사용되는 변수(쿼리변수+VO변수)아래
+queryStartNO,queryPerPageNum,page,perPageNum,startPage,endPage
+검색에 사용되는 변수(쿼리변수만): 검색어(search_keyword),검색조건(search_type)
+
+```
+--SQL쿼리 페이징을 구현해서 변수로 삼을것을 정의
+--PageVO의 멤버변수로 사용예정
+SELECT TableB.*FROM
+(
+    SELECT ROWNUM  AS RNUM, TableA.* FROM 
+    (
+        SELECT * FROM tbl_member
+        WHERE user_id LIKE '%admin%'
+        OR user_name LIKE '%사용자8%'
+        ORDER BY reg_date DESC 
+    )TableA WHERE ROWNUM <= (1*5) + 5 -- (page*b)+5
+)TableB WHERE TableB.RNUM > 1*5       -- (page*b)
+--페이징쿼리에서 필요한 변수는 2개 
+--현재페이지수의 변수  page*b == queryStartNo
+--1페이지당 보여줄 갯수의 변수 b == queryPerPageNum
+--PageVO에서 필요한 추가변수 :page
+--UI하단의 페이지 선택번호 출력할때 사용하는 변수(아래)
+--parPageNum 변수 받아서 startPage, endPage 를 구해서 
+--하단의 페이지 선택 번호를 출력 
+```
+
+
+
+####20210607월
+
 오라클 DB관리 로그이 정보:admin/ampsetup -> 변경:Apmsetup1234%
 오라클 기초이론 마무리:시퀸스(스프링에서사용-AI자동증가기능)
 JUNit로 CRUD 실습 
 마이바티스 이용해서 쿼리를 관리
-
+//M-V-C 사이에 데이터를  입출력하는 임시 저장하는 공간 (VO클래스-멤버변수_Get/set메서드)생성
+//보통 ValueObject 클래스는 DB테이블과1:1로 매칭
+//1.MEmberVO.java VO클래스를 생성(필수)
+//2.DB(마이바티스쿼리)쿼리를 만듭니다.(VO사용)
 ####20210604
 오라클일떄:localhost:1521/xe 접속jsp
 junit테스트시 SQL에러를 디버그하는 방법은 jdbc드라이버->log4jdbc드라이버
 바꾸면, sql에러가 나오게됩니다
 junit에서는 sql에러가 보입니다.콘솔창에는 보이지 않습니다. 콘솔창에서sql로그상황이 나오게 하는 드라이버를 추가pom.xml에 추가합니다
+
 ```
+
 SELECT * FROM all_users;
 DELETE FROM all_susers WHERE username='XE2';
 --시노님=테이블명이 사용가ㅣ 힘들정도로 길거나
@@ -21,6 +56,7 @@ DROP USER XE2 CASCADE;--xe2사용자를 지울때
 --xe사용자 생성한 테이블까지 모두 지우는 명령
 --CSS(cascade style sheet)  
 ```
+
 ####20210603
 작업비중(시간)=관리자단 (70%)-사용자단(50%)
 JUnit테스트: 오라클 연동후 회원 관리부분 CRUD  테스트 진행 예정
