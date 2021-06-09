@@ -6,8 +6,73 @@
 이번주 조회기능중 검색기능,페이징처리기능을 실습하시는 것이 핵심
  -->
 <mapper namespace="memberMapper">
-<!-- 무조건 조회 쿼리-->
+<!-- 공통쿼리 마이바티스 include문사용,
+if조건문에서 test조건부분에 문자열비교시 '문자열'.toString()형변환함수는 필수 필요 없으면 비교불가
+다음처럼 비교해도 가능합니다.test="''.equals(search_type)"
+참고로equals머세드를 사용하면 null비교까지 포함됩니다
+ -->
+
+<sql id="sqlWhere">
+<if test ="search_type != ''and search_type != null">
+        WHERE 
+            <if test="search_type =='all'.toString()">
+		        user_id LIKE '%'||#{search_keyword}||'%'
+		        OR user_name LIKE '%'||#{search_keyword}||'%'
+	        </if>
+	        <if test="search_type =='user_id'.toString()">
+	        	user_id LIKE '%'||#{search_keyword}||'%'
+	        </if>
+	        <if test="search_type =='user_name'.toString()">
+	       	 	user_name LIKE '%'||#{search_keyword}||'%'
+	        </if>
+        </if>
+ </sql> 
+ <!-- jsp폼에서 전송받은 user_id값의 데이터를 이용해서 DB에서 해당레코드를 삭제(아래) -->
+ <delete id="deleteMember">
+ delete from tbl_member where user_id = #{user_id}
+ </delete>
+ <!-- jsp폼에서 전송받은 memberVo객체의 데이터를 DB에 insert합니다(아래) -->
+ <insert id="insertMember">
+ insert into tbl_member 
+ (
+ user_id,
+ user_pw,
+ user_name,
+ email,
+ point,
+ enabled,
+ levels,
+ reg_date
+ ) 
+ values 
+ (
+ #{user_id},
+ #{user_pw},
+ #{user_name},
+ #{email},
+ #{point},
+ #{enabled},
+ #{levels},
+ systimestamp
+ )
+ </insert>      
+<select id="countMember" resultType ="int">
+select count(*) from tbl_member 
+</select>
+<!-- pageVO  받아서 처리하는 조회 쿼리-->
 <select id="selectMember" resultType="com.edu.vo.MemberVO">
-select * from tbl_member
+
+SELECT TableB.*FROM
+(
+    SELECT ROWNUM  AS RNUM, TableA.* FROM 
+    (
+        SELECT * FROM tbl_member
+        <include refid="sqlWhere"/>
+        ORDER BY reg_date DESC 
+    )TableA
+<![CDATA[
+     WHERE ROWNUM <= (#{queryStartNo}*#{queryPerPageNum})+#{queryPerPageNum}
+)TableB WHERE TableB.RNUM > #{queryStartNo}*#{queryPerPageNum}
+]]>
 </select>
 </mapper>
