@@ -1,3 +1,12 @@
+####20210610목
+GTM(글로벌타임)이라서 한국시간과 맞지 않을때, 서버시간을 바꿀권한이 없을때, 아래처럼
+입력시 등록일시에 +9시간을 더해서 한국시간으로 맞춥니다.
+오라클일때 확인 :
+SELECT TO_CHAR(systimestamp + numtodsinterval( 9, 'HOUR' ), 'YYYY-MM-DD HH24:MI.SS.FF4')  from dual;
+Mysql(마리아dB)확인 :
+SELECT DATE_ADD(NOW(3), INTERVAL 9 HOUR);
+
+
 ####20210608화
 페이징에 사용되는 변수(쿼리변수+VO변수)아래
 queryStartNO,queryPerPageNum,page,perPageNum,startPage,endPage

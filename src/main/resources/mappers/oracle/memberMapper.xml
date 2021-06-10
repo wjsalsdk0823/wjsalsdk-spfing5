@@ -27,6 +27,26 @@ if조건문에서 test조건부분에 문자열비교시 '문자열'.toString()�
 	        </if>
         </if>
  </sql> 
+ <!-- jsp수정페이지에서 수정할 내용을 입력하는 쿼리(아래)
+ 사용자 정보 수정시 매번 암호를 넣지 않기때문에, 
+  -->
+ <update id="updateMember">
+	 update tbl_member set
+	 email = #{email},
+	 enabled = #{enabled},
+	 levels = #{levels},
+	 point = #{point},
+	 update_date = systimestamp,
+	 <if test="user_pw !=''">
+	 user_pw = #{user_pw},
+	 </if>
+	 user_name = #{user_name}
+	 where user_id = #{user_id}
+ </update>
+ <!-- jsp상세보기에 출력할 내용을 뽑아내는 쿼리 -->
+ <select id="readMember" resultType="com.edu.vo.MemberVO">
+ select * from tbl_member where user_id = #{user_id}
+ </select>
  <!-- jsp폼에서 전송받은 user_id값의 데이터를 이용해서 DB에서 해당레코드를 삭제(아래) -->
  <delete id="deleteMember">
  delete from tbl_member where user_id = #{user_id}
@@ -55,9 +75,12 @@ if조건문에서 test조건부분에 문자열비교시 '문자열'.toString()�
  #{levels},
  systimestamp
  )
- </insert>      
+ </insert>  
+ <!-- 현재처럼 무조건 갯수를 구하면, 검색결과에 대한 페이징 값을 구할 수 없음.
+ 그래서 검색이 포함된 카우트개수가 나와야함 -->    
 <select id="countMember" resultType ="int">
-select count(*) from tbl_member 
+	select count(*) from tbl_member 
+	<include refid="sqlWhere" />
 </select>
 <!-- pageVO  받아서 처리하는 조회 쿼리-->
 <select id="selectMember" resultType="com.edu.vo.MemberVO">
