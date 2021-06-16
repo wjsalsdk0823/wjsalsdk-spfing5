@@ -25,7 +25,7 @@
 
   <!-- Preloader A로고 로딩중 ...표시-->
   <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="/resources/admin/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+    <img class="animation__shake" src="/resources/admin/dist/img/AdminLTElogo2.png" alt="AdminLTELogo" height="60" width="60">
   </div>
 
   <!-- Navbar 햄버거 메뉴라인 부분-->
@@ -93,7 +93,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="board_list.html" class="nav-link">
+            <a href="/admin/bbs_type/bbs_type_list" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>게시판생성관리</p>
             </a>

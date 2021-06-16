@@ -3,7 +3,7 @@
 /* 모바일용 메인페이지 스타일 지정(아래) */
 /* 공통영역 */
 body { /* body a 태그엔 적용이 않됩니다. */
-    font-family: 'Nanum Gothic', '나눔 고딕', sans-serif !important ;
+    font-family: 'Nanum Gothic', '나눔 고딕', sans-serif !important;
     font-size: 16px !important;/* important 중요함, body 폰트크기는 무조건 고정 */
     letter-spacing: -1px !important;
     color: #444 !important;
@@ -68,7 +68,7 @@ header { /* 태그선택자 */
 	display: inline-block;
 	width: 150px;
 	height: 80px;
-	background: url(../img/logo.png) no-repeat;/* css3는 함수를 지원합니다. */
+	background: url(../img/logo2.png) no-repeat;/* css3는 함수를 지원합니다. */
 	background-size: 50px 60px !important;/* 백그라운드 이미지 사이즈 가로50px, 세로60px */
 	background-position: center center !important;/* 이미지위치가 가로 가운데, 세로 가운데정렬 */
 	text-indent: -9999px;/* 들여쓰기 이미지만 보이고, 글자는 숨기기 위치 */

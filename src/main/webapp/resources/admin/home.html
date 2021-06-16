@@ -4,31 +4,30 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | 대시보드</title>
-
-  <!-- Google Font: Source Sans Pro -->
+  <!-- Google Font: Source Sans Pro 구글웹폰트 -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
+  <!-- Font Awesome 폰트어썸 -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-  <!-- Tempusdominus Bootstrap 4 -->
+  <!-- Tempusdominus Bootstrap 4 부트스트랩4 -->
   <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-  <!-- Theme style -->
+  <!-- Theme style AdminLTE 테마스타일 -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
-  <!-- overlayScrollbars -->
+  <!-- overlayScrollbars 왼쪽스크롤메뉴 -->
   <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  <!-- summernote -->
+  <!-- summernote 웹에디터 -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-  <!-- Preloader A로고 로딩중 ...표시-->
+  <!-- Preloader A로고 로딩중...표시 -->
   <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
   </div>
 
-  <!-- Navbar 햄버거 메뉴라인 부분-->
+  <!-- Navbar 햄버거메뉴 라인 부분 -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links 왼쪽 햄버거 메뉴와 home링크메뉴-->
+    <!-- Left navbar links 왼쪽 햄버거 메뉴와 Home링크메뉴 -->
     <ul class="navbar-nav">
       <li class="nav-item"> 
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
@@ -37,9 +36,9 @@
         <a href="home.html" class="nav-link">Home</a>
       </li>
     </ul>
-    <!-- Right navbar links 오른쪽 아이콘 메뉴-->
+    <!-- Right navbar links 오른쪽 아이콘 메뉴 -->
     <ul class="navbar-nav ml-auto">
-      
+     
       <li class="nav-item">
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
           <i class="fas fa-th-large"></i>
@@ -49,7 +48,7 @@
   </nav>
   <!-- /.navbar -->
 
-  <!-- Main Sidebar Container 왼쪽 사이드 메뉴 내용-->
+  <!-- Main Sidebar Container 왼쪽 사이드메뉴내용 -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="home.html" class="brand-link">
@@ -59,7 +58,7 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar user panel (optional) 로그인한정보-->
+      <!-- Sidebar user panel (optional) 로그인한 정보 -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
           <img src="dist/img/avatar3.png" class="img-circle elevation-2" alt="User Image">
@@ -69,7 +68,19 @@
         </div>
       </div>
 
-      <!-- Sidebar Menu  메뉴시작 -->
+      <!-- SidebarSearch Form 검색폼 -->
+      <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-sidebar">
+              <i class="fas fa-search fa-fw"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu 메뉴시작 -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
@@ -79,7 +90,7 @@
             <a href="/" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-               사용자홈
+                사용자홈
                 <span class="right badge badge-danger">New</span>
               </p>
             </a>
@@ -91,20 +102,20 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="board_list.html" class="nav-link">
+            <a href="#" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>게시판생성관리</p>
             </a>
           </li>
           <li class="nav-item menu-open">
-            <a href="board_list.html" class="nav-link">
+            <a href="#" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>게시물관리
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <!--위 게시판 생성관리에서 만든 게시판 개수에 따라서 자동 증가(아래)-->
+              <!-- 위 게시판 생성관리에서 만든 게시판 개수에 따라서 자동 증가(아래) -->
               <li class="nav-item">
                 <a href="board_list.html" class="nav-link">
                   <i class="far fa-dot-circle nav-icon"></i>
@@ -114,7 +125,7 @@
               <li class="nav-item">
                 <a href="board_list.html" class="nav-link">
                   <i class="far fa-dot-circle nav-icon"></i>
-                  <p>갤러리</p>
+                  <p>겔러리</p>
                 </a>
               </li>
             </ul>
@@ -168,7 +179,7 @@
           <!-- /.card-header -->
           <div class="card-body p-0">
             <ul class="users-list clearfix">
-              <li style="cursor: pointer;" onclick="alert('해당회원정보고 이동합니다.-준비중');">
+              <li style="cursor: pointer;" onclick="alert('해당회원정보로 이동합니다.-준비중');">
                 <img src="dist/img/default-150x150.png" alt="User Image">
                 <a class="users-list-name" href="#">관리자</a>
                 <span class="users-list-date">2021-05-28</span>
@@ -179,16 +190,16 @@
           </div>
           <!-- /.card-body -->
           <div class="card-footer text-center">
-            <a href="javascript:alert('회원목록으로 이동-준비중');">View All Users</a>
+            <a href="javascript:alert('회원목록으로이동-준비중');">View All Users</a>
           </div>
           <!-- /.card-footer -->
-        </div>  
-        <!--//최근 등혹한 회원목록-->
-        <!--최근게시물리스트(공지사항+갤러리+QnA게시판)-->
+        </div>
+        <!-- //최근 등록한 회원목록 -->
+        <!-- 최근게시물리스트(공지사항+겔러리+QnA게시판) -->
         <div class="card">
           <div class="card-header border-transparent">
             <h3 class="card-title">최근공지사항</h3>
-            
+
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
                 <i class="fas fa-minus"></i>
@@ -219,7 +230,7 @@
                     <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
                   </td>
                 </tr>
-                                            
+                
                 </tbody>
               </table>
             </div>
@@ -233,8 +244,8 @@
         </div>
         <div class="card">
           <div class="card-header border-transparent">
-            <h3 class="card-title">최근갤러리</h3>
-            
+            <h3 class="card-title">최근겔러리</h3>
+
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
                 <i class="fas fa-minus"></i>
@@ -265,7 +276,7 @@
                     <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
                   </td>
                 </tr>
-                                            
+                
                 </tbody>
               </table>
             </div>
@@ -277,7 +288,7 @@
           </div>
           <!-- /.card-footer -->
         </div>
-        <!--//최근게시물리스트-->
+        <!-- //최근게시물리스트 -->
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
@@ -291,9 +302,9 @@
     </div>
   </footer>
 
-  <!-- Control Sidebar 오른쪽 바둑판 메뉴 클릭시 나오는 내용-->
+  <!-- Control Sidebar 오른쪽 바둑판베뉴클릭시 나오는 내용 -->
   <aside class="control-sidebar control-sidebar-dark">
-    <!-- demo.js 에서 출력할 내용이 존재, jemo.js사용안함 -->
+    <!-- demo.js에서 출력할 내용이 존재, demo.js사용않함. -->
     <div class="text-center mt-4">
     <h5>로그아웃</h5><hr class="mb-2"/>
     <button type="button" class="btn btn-primary" id="btn_logout">로그아웃</button>
@@ -302,16 +313,15 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
-<!-- jQuery -->
+<!-- jQuery 제이쿼리 코어 -->
 <script src="plugins/jquery/jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
+<!-- jQuery UI 1.11.4 제이쿼리 UI코어 -->
 <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
-<!-- Bootstrap 4 부트스트랩4 코어-->
+<!-- Bootstrap 4 부트스트랩4 코어 -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- Summernote 섬머노트웹에디터 코어 -->
 <script src="plugins/summernote/summernote-bs4.min.js"></script>
@@ -319,7 +329,7 @@
 <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App AdminLTE코어 -->
 <script src="dist/js/adminlte.js"></script>
-<!-- AdminLTE for demo purposes 오른쪽메뉴 로그아웃사용 코어:사용안함-->
-<!-- <script src="dist/js/demo.js"></script>/ -->
+<!-- AdminLTE for demo purposes 오른쪽메뉴-로그아웃사용 코어: 사용안함. -->
+<!-- <script src="dist/js/demo.js"></script> -->
 </body>
 </html>
