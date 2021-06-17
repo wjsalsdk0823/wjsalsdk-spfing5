@@ -6,7 +6,7 @@
 delete from tbl_board_type where board_type =#{board_type}
 </delete>
 <update id="updateBoardType">
-update tbl_board_type set board_neme = #{board_name}, board_sun=#{board_sun}
+update tbl_board_type set board_name = #{board_name}, board_sun=#{board_sun}
  where board_type=#{board_type}
 </update>
 <select id="readBoardType" resultType="com.edu.vo.BoardTypeVO">
