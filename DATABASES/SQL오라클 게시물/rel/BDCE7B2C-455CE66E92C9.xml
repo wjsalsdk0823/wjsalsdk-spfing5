@@ -1,8 +1,0 @@
-<?xml version = '1.0' encoding = 'UTF-8'?>
-<relationalModel class="oracle.dbtools.crest.model.design.relational.RelationalDesign" name="Relational_1" id="BDCE7B2C-2CAA-B8FA-185B-455CE66E92C9" mainViewID="0AD3B8E0-10E4-EDB8-8782-16F1B6A3C814">
-<createdBy>wjsal</createdBy>
-<createdTime>2021-06-18 00:18:21 UTC</createdTime>
-<ownerDesignName>SQL오라클 게시물</ownerDesignName>
-<shouldBeOpen>false</shouldBeOpen>
-<selectedRDBMSSite>32076570-2523-435C-2E92-BF29817DFF70</selectedRDBMSSite>
-</relationalModel>

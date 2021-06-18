@@ -1,7 +1,0 @@
-<?xml version = '1.0' encoding = 'UTF-8'?>
-<ProcessModel class="oracle.dbtools.crest.model.design.process.ProcessModel" name="Process Model" id="4F46DFF1-CA0E-2C31-E828-7E7461165C4F">
-<createdBy>wjsal</createdBy>
-<createdTime>2021-06-18 00:18:19 UTC</createdTime>
-<ownerDesignName>SQL오라클 게시물</ownerDesignName>
-<shouldBeOpen>false</shouldBeOpen>
-</ProcessModel>
