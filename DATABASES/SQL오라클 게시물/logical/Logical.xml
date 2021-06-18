@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<LogicalDesign class="oracle.dbtools.crest.model.design.logical.LogicalDesign" name="Logical" id="3557C9AC-FBAC-AE16-2FF0-92DBD75CBDE1" mainViewID="465347E1-9D62-6B63-168F-AF7672118F9A">
+<createdBy>wjsal</createdBy>
+<createdTime>2021-06-18 00:18:19 UTC</createdTime>
+<ownerDesignName>SQL오라클 게시물</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+</LogicalDesign>

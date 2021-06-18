@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="SQL오라클 게시물" id="0E78F36C-FB72-F11F-B111-E7EC045C237B" version="3.5">
+<createdBy>wjsal</createdBy>
+<createdTime>2021-06-18 00:18:19 UTC</createdTime>
+<ownerDesignName>SQL오라클 게시물</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>0E78F36C-FB72-F11F-B111-E7EC045C237B</designId>
+</OSDM_Design>
