@@ -80,10 +80,11 @@ select table_b.* from
 	(
 	select * from tbl_board
 	<include refid="sqlWhere" />
+	order by bno desc
 	) table_a
 	<![CDATA[	
-	where rownum <= (#{queryStartNo}*#{queryPerPageNum})+#{queryPerPageNum}
-)table_b where table_b. rnum > #{queryStartNo}*#{queryPerPageNum}
+	where rownum <= #{queryStartNo}+#{queryPerPageNum}
+)table_b where table_b. rnum > #{queryStartNo}
 	]]>
 </select>
 <!-- 검색처리는 멤버쿼리에서 작성한 내용 붙여넣고 다중게시판용 필드조회조건 추가 pageVO -->
@@ -91,7 +92,6 @@ select table_b.* from
   WHERE board_type = #{board_type}
 <if test ="search_type != ''and search_type != null">
       		and (
-        	board_type = #{board_type}
             <if test="search_type =='all'.toString()">
 		        title LIKE '%'||#{search_keyword}||'%'
 		        OR content LIKE '%'||#{search_keyword}||'%'

@@ -26,7 +26,7 @@
 
   <!-- Preloader A로고 로딩중 ...표시-->
   <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="/resources/admin/dist/img/AdminLTElogo2.png" alt="AdminLTELogo" height="60" width="60">
+    <img class="animation__shake" src="/resources/admin/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
   </div>
 
   <!-- Navbar 햄버거 메뉴라인 부분-->
@@ -110,7 +110,7 @@
               <!--위 게시판 생성관리에서 만든 게시판 개수에 따라서 자동 증가(아래)-->
               <c:forEach var="boardTypeVO" items="${listBoardTypeVO}">
                <li class="nav-item">
-                <a href="board_list.html" class="nav-link">
+                <a href="/admin/board/board_list?board_type=${boardTypeVO.board_type}" class="nav-link">
                   <i class="far fa-dot-circle nav-icon"></i>
                   <p>${boardTypeVO.board_name}</p>
                 </a>
