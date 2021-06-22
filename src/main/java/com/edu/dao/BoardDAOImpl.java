@@ -56,7 +56,7 @@ public class BoardDAOImpl implements IF_BoardDAO{
 	@Override
 	public void updateViewCount(Integer bno) throws Exception {
 		// TODO 
-		sqlSession.update("boardMapper.updatdeViewCount", bno);
+		sqlSession.update("boardMapper.updateViewCount", bno);
 	}
 
 	@Override
