@@ -41,34 +41,49 @@ public class AspectAdvice {
 	//@Around=@Before+@Arter = @Around(포인트 컷 전+후0*(...)모든메서드)
 	@Around("execution(* com.edu.controller.*Controller.*(..))")
 	public Object sessionManager(ProceedingJoinPoint pjp) throws Throwable {
-		//board_type 변수값을 세션에 저장하려고함
+		//board_type변수값을 세션에 저장하려고 함. 클라이언트별 세션이 발생됨.
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-		//컨트롤러 클래스에서 매개변수로 받을값(board_type) < pageVO,boardVO
+		//일반적인 컨트롤러에서는 매개변수 HttpServletRequest를 사용가능함. 위처럼 복잡하게 구하지 않음.
+		//컨트롤러 클래스에서 매개변수로 받을값(board_type) < pageVO
 		PageVO pageVO = null;
-		String board_type = null;
-		//조인포인트리스트의 객체를 1개씩 뽑아냄
+		String board_type = null;//jsp에서 전송되는 값을 임시로 저장,목적은 세션변수 발생조건으로사용
+		String search_keyword = null;//한글검색시 IE에서 400에러발생때문에 추가
+		//조인포인트리스트의 객체의 메서드의 Arguments(매개변수)를 뽑아냄 
 		for(Object object:pjp.getArgs()) {
-			if(object instanceof PageVO) {
+			if(object instanceof PageVO) {//AOP실행메서드중 매개변수 PageVO pageVO객체 판단
+				//결과는 게시판이나 멤버 서비스에 PageVO사용하는 서비스에만 적용됨. 게시판생성관리에는 적용X
 				pageVO = (PageVO) object;
 				board_type = pageVO.getBoard_type();
-			}			
+				search_keyword = pageVO.getSearch_keyword();
+			}
 		}
-		if(request !=null) {//jsp에서 Get.Post있을때
-			//세션값을 pageVO.board_type 값으로 저장 로직
-			HttpSession session = request.getSession();
-			if(board_type != null) {
+		if(request != null) {//jsp에서 Get,Post 있을때,
+			//세션값을 pageVO.board_type 값으로 저장 로직(아래)
+			HttpSession session = request.getSession();//PC가 스프링프로젝트 접근시 세션객체
+			//검색폼이 있는 jsp에서 발생됨. 결과는 검색폼이 없는 입력/수정/삭제에서는 실행않됨.
+			if(search_keyword != null) {//검색어가 발생하면 최초로 세션를 만듭니다.
+				session.setAttribute("session_search_keyword", search_keyword);
+			}
+			if(session.getAttribute("session_search_keyword") != null) {
+				//세션값이 있다면, 실행
+				search_keyword = (String) session.getAttribute("session_search_keyword");
+				if(pageVO !=null) {//겟,셋중에 Set할때 pageVO널이면 에러발생하기 때문에 추가한 코드
+					pageVO.setSearch_keyword(search_keyword);
+				}
+			}
+			if(board_type != null) {//최초로 세션변수가 발생
 				session.setAttribute("session_board_type", board_type);
 			}
 			if(session.getAttribute("session_board_type") != null) {
 				board_type = (String) session.getAttribute("session_board_type");
-				if(pageVO != null) {//set은 pageVO가 unll아닐 경우만 실행되도록 처리
-					pageVO.setBoard_type(board_type);//검색목표달성:여기서 항상 값을 가져가도록 구현
+				if(pageVO != null) {//Set은 pageVO가 null아닐 경우만 실행되도록
+					pageVO.setBoard_type(board_type);//검색목표달성:여기서 항상 값을 가져가도록 구현됩니다.
 				}
 			}
 			logger.info("디버그19: "+(String) session.getAttribute("session_board_type"));
-		}
-		//Aspect > 포인트컷 (around)> 조인포인트 (메서드) > 매개변수로 구현
-		Object result = pjp.proceed();
+		}		//Aspect > 포인트컷(Around) > 조인포인트(메서드) > 매개변수로 구현한 결과를 리턴
+		
+		Object result = pjp.proceed();//여기서 조인포인트가 실행됩니다.
 		return result;
 	}
 	
