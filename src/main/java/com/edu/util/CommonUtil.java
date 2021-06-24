@@ -1,15 +1,25 @@
 package com.edu.util;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
@@ -19,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.edu.dao.IF_BoardDAO;
 import com.edu.service.IF_MemberService;
 import com.edu.vo.MemberVO;
 
@@ -34,7 +45,91 @@ public class CommonUtil {
 	private Logger logger = LoggerFactory.getLogger(CommonUtil.class);
 	@Inject
 	private IF_MemberService memberService;//스프링빈을 주입받아서(DI)객체준비
+	@Inject
+	private IF_BoardDAO boardDAO;
 	
+	//첨부파일 업로드/다운로드/삭제/인서트/수정에 모두 사용될 저장경로 1개 지정해서 전역으로 사용
+	@Resource(name="uploadPath")
+	private String uploadPath;			
+	public String getUploadPath() {
+		return uploadPath;
+	}
+	
+	//첨부파일 개별 삭제 ajax로 받아서 처리
+	@RequestMapping(value="/file_delete", method=RequestMethod.POST)
+	@ResponseBody
+	public String file_delete(@RequestParam("save_file_name")String save_file_name) {
+		String result = "";
+		try {
+			boardDAO.deleteAttach(save_file_name);
+			File target = new File(uploadPath +"/" + save_file_name);
+			if(target.exists()) {
+				target.delete();
+			}
+			result = "success";
+		} catch (Exception e) {
+			result = "fail: " + e.toString();
+		}		
+		return result;
+	}	
+	//다운로드 처리도 같은 페이지에서 결과 값 반환받는 @ResponseBody 사용
+	@RequestMapping(value="/download", method=RequestMethod.GET)
+	@ResponseBody
+	public FileSystemResource download (@RequestParam("save_file_name")String save_file_name, @RequestParam("real_file_name")String real_file_name, HttpServletResponse response) throws Exception {
+		//FileSystem 은 스츠링 코어에서 제공하는 전용 파일처리 클래스
+		File file = new File(uploadPath +"/" + save_file_name);
+		response.setContentType("application/download; utf-8");
+		real_file_name = URLEncoder.encode(real_file_name);
+		response.setHeader("Content-Disposition", "attachment; filename=" + real_file_name);
+		return new FileSystemResource(file);
+	}
+	
+	//페이지이동이 아닌 같은 페이지에 결과값만 반환하는 @ResponseBody
+	@RequestMapping(value="/image_preview", method=RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<byte[]> imagePreview(@RequestParam("save_file_name")String save_file_name, HttpServletResponse response) throws Exception {
+		//파일을 입출력할때는 파일을byte형식으로 입출력할때 발생되는 통로 스트림이 발생
+		FileInputStream fis = null;//입력통로
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();//출력 통로
+		fis = new FileInputStream(uploadPath + "/" + save_file_name);
+		int readCount = 0;
+		byte[] buffer = new byte[1024]; //buffer임시저장소 크기 지정
+		byte[] fileArray = null;//출력스트림결과 저장하는 공간
+		//반복문:목적, fis입력받는 save_file_name byte값이 (배열) -1일때 까지 반복
+		while((readCount=fis.read(buffer)) != -1) {
+			//입력통로fis에서 출력통로로 baos보냅니다
+			baos.write(buffer, 0, readCount);
+			//결과는 baos에 누적된 결과가 들어갑니다. jsp로 보내주면됩니다.
+		}
+		fileArray = baos.toByteArray();
+		fis.close();//메모리 초기화
+		baos.close();
+		//fileArray값을 jsp로 보내주는 준비작업 final이 메서드에서만 사용하겠다고 명시
+		final HttpHeaders headers = new HttpHeaders();
+		String ext = FilenameUtils.getExtension(save_file_name);
+		//이미지 확장자에 따라서 매칭되는 헤더 값이 변해야 이미지 미리보기가 정상으로 보임
+		switch(ext.toLowerCase()) {
+		case "png":
+			headers.setContentType(MediaType.IMAGE_PNG);
+			break;
+		case "jpg":
+			headers.setContentType(MediaType.IMAGE_JPEG);
+			break;
+		case "gif":
+			headers.setContentType(MediaType.IMAGE_GIF);
+			break;
+		case "jpeg":
+			headers.setContentType(MediaType.IMAGE_JPEG);
+			break;
+		case "bmp":
+			headers.setContentType(MediaType.parseMediaType("image/bmp"));
+			break;
+		default:break;
+		}
+		
+		return new ResponseEntity<byte[]>
+		(fileArray,headers,HttpStatus.CREATED);
+	} 
 	//XSS크로스사이트스크립트 방지용 코드를 파싱하는 메서드(아래)
 	public String unScript(String data) {
 		//if(data == null || data.trim().equals("")) {
@@ -54,12 +149,7 @@ public class CommonUtil {
         ret = ret.replaceAll("</(F|f)(O|o)(R|r)(M|m)", "&lt;form");
 		return ret;
 	}
-	//첨부파일 업로드/다운로드/삭제/인서트/수정에 모두 사용될 저장경로 1개 지정해서 전역으로 사용
-	@Resource(name="uploadPath")
-	private String uploadPath;			
-	public String getUploadPath() {
-		return uploadPath;
-	}
+	
 	
 	//첨부파일이 이미지인지 아닌지 확인하는 데이터  생성
 	private ArrayList<String> checkImgArray = new ArrayList<String>() {

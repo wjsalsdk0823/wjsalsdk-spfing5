@@ -66,7 +66,7 @@
                <c:forEach begin="0" end="1" var="idx">
 	                <c:if test="${boardVO.save_file_names[idx] != null}">
 	                <div class="input-group">
-	                  <div class="custom-file">
+	                  <div class="">	     
 	                  <!-- 첨부파일을 URL로 직접 접근하지 못하기 때문에 다운로드 전용 매서드 생성 -->
 	                    <a href="/download?save_file_name=${boardVO.save_file_names[idx]}&real_file_name=${boardVO.real_file_names[idx]}" >
 	                    ${boardVO.real_file_names[idx]}
