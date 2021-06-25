@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.edu.dao.IF_BoardDAO;
+import com.edu.dao.IF_ReplyDAO;
 import com.edu.vo.AttachVO;
 import com.edu.vo.BoardVO;
 import com.edu.vo.PageVO;
@@ -21,6 +22,9 @@ import com.edu.vo.PageVO;
 public class BoardServiceImpl implements IF_BoardService {
 	@Inject
 	private IF_BoardDAO boardDAO;
+	
+	@Inject
+	private IF_ReplyDAO replyDAO;
 	
 	@Override
 	public List<AttachVO> readAttach(Integer bno) throws Exception {
@@ -43,6 +47,7 @@ public class BoardServiceImpl implements IF_BoardService {
 		//댓글 삭제도 나중에 추가
 		//특이사항: 첨부파일DB만 삭제해서 해결+실제 업로드된 파일을 삭제가 필요 나중에 추가
 		boardDAO.deleteAttachAll(bno);
+		replyDAO.deleteReplyAll(bno);
 		boardDAO.deleteBoard(bno);
 	}
 
