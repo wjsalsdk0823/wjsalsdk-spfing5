@@ -62,9 +62,14 @@ public class ReplyDAOImpl implements IF_ReplyDAO{
 	}
 
 	@Override
-	public List<ReplyVO> selectReply(PageVO pageVO) throws Exception {
+	public List<ReplyVO> selectReply(Integer bno, PageVO pageVO) throws Exception {
 		// TODO 
-		return sqlSession.selectList("replyMapper.selectReply", pageVO);
+		Map<String,Object> paramMap = new HashMap<String,Object>();
+		//paramMap.put("pageVO", pageVO);
+		paramMap.put("queryStartNo",pageVO.getQueryStartNo());
+		paramMap.put("queryPerPageNum", pageVO.getQueryPerPageNum());
+		paramMap.put("bno", bno);
+		return sqlSession.selectList("replyMapper.selectReply", paramMap);
 	}
 	
 }

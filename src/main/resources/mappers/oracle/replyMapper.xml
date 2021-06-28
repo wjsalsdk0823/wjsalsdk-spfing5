@@ -3,7 +3,7 @@
 <mapper namespace="replyMapper">
 <!-- 게시물을 지울때, 댓글 내용을 먼저 지우는 쿼리 -->
 <delete id="deleteReplyAll">
-delete from tbl_reply where bnt = #{bno}
+delete from tbl_reply where bno = #{bno}
 </delete>
 
 <select id="deletReply">
@@ -31,7 +31,7 @@ where bno = #{bno}
 	insert into tbl_reply 
 	(rno, reply_text, replyer, reg_date, bno)
 	values
-	(#{rno}, #{reply_text}, #{replyer}, #{reg_date}, systimestamp, #{bno})
+	(#{rno}, #{reply_text}, #{replyer}, systimestamp, #{bno})
 </insert>
 
 <select id="countReply" resultType="int">
@@ -44,7 +44,7 @@ select rnum, tableB. * from
 	select rownum AS rnum, tableA.* from 
 	(
 		select * from tbl_reply
-		where bno = # {bno}
+		where bno = #{bno}
 		order by rno desc
 	) tableA
 <![CDATA[	

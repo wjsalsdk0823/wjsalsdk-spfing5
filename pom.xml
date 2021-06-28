@@ -181,6 +181,12 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>${org.aspectj-version}</version>
 		</dependency>
+		<!-- ResponseEntity<HashMap>형태의 date를 클라이언트 json데이터로 반환 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.7</version>
+		</dependency>
 		
 	</dependencies>
     <build>
