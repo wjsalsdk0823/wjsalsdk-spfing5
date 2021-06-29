@@ -33,10 +33,18 @@ public class ReplyController {
 	@Inject
 	private IF_ReplyService replyService;
 	
-	@RequestMapping(value="reply/reply_delete", method=RequestMethod.DELETE)
-	public ResponseEntity<String> reply_delete(){
+	@RequestMapping(value="reply/reply_delete/{bno}/{rno}", method=RequestMethod.DELETE)
+	public ResponseEntity<String> reply_delete(@PathVariable("bno")Integer bno,@PathVariable("rno")Integer rno){
 		ResponseEntity<String> result = null;
-		
+		ReplyVO replyVO = new ReplyVO();
+		replyVO.setBno(bno);
+		replyVO.setRno(rno);
+		try {
+			replyService.deleteReply(replyVO);
+			result = new ResponseEntity<String>("success",HttpStatus.OK);
+		} catch (Exception e) {
+			result = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		return result;
 	}
 	@RequestMapping(value="reply/reply_update", method=RequestMethod.PATCH)

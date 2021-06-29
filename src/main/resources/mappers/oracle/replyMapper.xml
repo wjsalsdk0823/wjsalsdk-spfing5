@@ -6,7 +6,7 @@
 delete from tbl_reply where bno = #{bno}
 </delete>
 
-<select id="deletReply">
+<select id="deleteReply">
 delete from tbl_reply where rno = #{rno}
 </select>
 
@@ -20,7 +20,7 @@ where rno = #{rno}
 <!-- 댓글을 등록할떄 게시판테이블에 reply_count 필드에 값이 +1발생 -->
 <update id="replyCountUpdate">
 update tbl_board set
-reply_count = reply_count + #{count}
+reply_count = (select count(*) from tbl_reply where bno = #{bno})
 where bno = #{bno}
 </update>
 
