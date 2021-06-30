@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+
+
+<security:http pattern="/**/*.js" security="none" />
+<security:http pattern="/**/*.css" security="none" />
+<security:http pattern="/**/img/*" security="none" />
+<!-- 스프링시큐리티 기본설정 시작  use-expressions=true 아래 설정 내용중 자바의 EL을 사용 -->
+<security:http auto-config="true" use-expressions="true">
+	<security:session-management invalid-session-url="/">
+	<security:concurrency-control max-sessions="3" error-if-maximum-exceeded="false" />
+	</security:session-management>
+	<!-- 여기서부터 intercept사용 -->
+	<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+	<security:intercept-url pattern="/**/*_insert" access="hasRole('ROLE_USER','ROLE_ADMIN')" />
+	<security:intercept-url pattern="/**/*_insert_form" access="hasRole('ROLE_USER','ROLE_ADMIN')" />
+	<security:intercept-url pattern="/**/*_update" access="hasRole('ROLE_USER','ROLE_ADMIN')" />
+	<security:intercept-url pattern="/**/*_update_form" access="hasRole('ROLE_USER','ROLE_ADMIN')" />
+	<security:intercept-url pattern="/**/*_delete" access="hasRole('ROLE_USER','ROLE_ADMIN')" />
+	<security:intercept-url pattern="/**/*_member/**" access="hasRole('ROLE_USER','ROLE_ADMIN')" />
+	<security:intercept-url pattern="/**" access="permitAll" />
+	<security:csrf disabled="true"/>
+	<!-- 접근허용이 x사용자들을 체크해서 로그인 폼으로 이동하게 설정(아래)
+	ogin-processing 처리는 jsp로그인폼의 POST방식/login을 처리해 줌
+	 -->
+	<security:form-login
+		login-page="/login_form"
+		login-processing-url="/login"
+		always-use-default-target="true"
+		default-target-url="/login_success"
+		authentication-failure-url="/login_form?msg=fail"
+		username-parameter="user_id"
+		password-parameter="user_pw"
+	/>
+	<!-- 위 폼에서 받은 user_id user_pw 처리합니다 -->
+	<security:remember-me key="remember-key" token-validity-seconds="604800" remember-me-parameter="remember-me-parameter" />
+	<security:logout logout-url="/logout" logout-success-url="/" invalidate-session="true" 
+	delete-cookies="JSESSIONID,SPRING_SECURITY_REMEMBER_ME_COOKIE" />	
+</security:http>
+<!-- 스프링시큐티나  -->
+<security:authentication-manager>
+	<security:authentication-provider>
+	<security:jdbc-user-service
+	 data-source-ref="dataSource"
+	 users-by-username-query="select user_id as no,user_pw as password, enabled from tbl_member where user_id = ?"
+	 authorities-by-username-query="select user_id as no,levels as authority from tbl_member where user_id = ?"
+	 />	 
+	</security:authentication-provider>
+</security:authentication-manager>
+</beans>

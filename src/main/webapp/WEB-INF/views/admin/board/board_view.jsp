@@ -286,7 +286,7 @@ var printPagingList = function(pageVO, target) {
   //스프링RestAPI서버에서 받은 pageVO 오브젝트 gatget에 파싱합니다(아래)
   $(target).html('');//target의 내용만 지우고, target은 남아있음.
     //pageVO = 스프링에서 받은 json데이터, 변수3개 pageVO.prev(이전데이터가 있다면true), pageVO.next(다음데이터가 있다면 true), pageVO=5페이지로 가정
-    var pagination = '';//문자열 누적변수
+    var pagination = '';
 	//previous 출력(아래)
     var prevlink, nextlink;
     if(pageVO.prev) { prevlink = ''; } else { prevlink = 'disabled'; }
@@ -335,7 +335,32 @@ var replyList = function() {
 //댓글 CRUD처리
 $(document).ready(function(){
 	//댓글 모달창 삭제버튼 액셕처리
-	$("#btn_reply_delete").click(function(){}); 
+	$("#btn_reply_delete").click(function(){
+		//댓글을 삭제할때 필요한 변수확인2
+		var rno = $("#rno").val();//모달창의 input태그의 값을 가져오기
+		var bno = "${boardVO.bno}";//자바변수값
+		$.ajax({
+			type:"delete",//전송타입, RepuestMethod의 값과 동이
+			url:"/reply/reply_delete/"+bno+"/"+rno,
+			dataType:"text",//결과값을 받는 데이터형식
+			//data:"",
+			//headers:"",
+			success:function(result) {
+				if(result=="success") {
+					alert("삭제되었습니다");
+					//삭제후 모달창 숨기고, 댓글 리스트 리프레쉬(렌더링)
+					$("#modal-reply").modal("hide");
+					var replyCount = $("#reply_count").text();
+					$("#reply_count").text(parseInt(reply_count)-1);
+					$("#reply_page").val("1");
+					replyList();
+				}
+			},
+			error:function() {
+				alert("RestAPI서버가 작동하지 않습니다.");
+			}
+		});
+	}); 
 	//댓글 모달창 수정버튼의 액션처리
 	$("#btn_reply_update").click(function(){
 		//댓글을 수정할때 필요한 변수확인
@@ -347,24 +372,24 @@ $(document).ready(function(){
 			return false;//더이상 실행없이 콜백함수를 빠져 나갑니다.
 		}
 		$.ajax({
-			type:'patch',//컨트롤러의 method값과 같아야 함.
+			type:'patch',
 			url:'/reply/reply_update',
-			dataType:'text',//RestAPI컨트롤러에서 받는 데이터형식
+			dataType:'text',
 			data:JSON.stringify({
 				rno:rno,
 				reply_text:reply_text
-			}),//보내는 데이터 자체는 텍스트로 변환됨 단, 구조는 json형식으로 구성.
-			headers:{//보내는 데이터 형식
+			}),
+			headers:{
 				"Content-Type":"application/json",
 				"X-HTTP-Method-Override":"PATCH"
-			},//json데이터 형식으로 브라우저에 내장된 헤더값을 지정.
-			success:function(result){//댓글 입력이 성공시 실행 
+			},
+			success:function(result){
 				if(result=="success") {
 					alert("수정에 성공했습니다.");
 					//모달창 숨기기(아래)
 					$("#modal-reply").modal("hide");
 					//댓글 수정 후 화면에 댓글 목록 출력하는 함수실행
-					replyList();//화면의 일부분만 리프레시(재생)
+					replyList();
 				}
 				
 			},
@@ -409,7 +434,8 @@ $(document).ready(function(){
 				var reply_count = $("#reply_count").text();
 				$("#reply_count").text(parseInt(reply_count)+1);
 				$("#reply_page").val("1");
-				
+				//댓글 입력후 화면에 댓글 목록 출력하는 함수실행
+				replyList();
 			},
 			error:function () {
 				alert("RestAPI서버 작동하지 않습니다")

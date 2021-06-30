@@ -41,3 +41,28 @@
 <!-- <script src="/resources/admin/dist/js/demo.js"></script>/ -->
 </body>
 </html>
+<style>
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active
+{
+background-color:#fff;
+color:#000;
+}
+</style>
+<script>
+//왼쪽메뉴 선택시 active부트스트랩 클래스를 동적으로 추가하는 코드 아래
+$(document).ready(function(){
+	var current = location.pathname;
+	//alert(current);
+	var current2 = current.split("/")[2];
+	//alert(current2);
+	$(".nav-treeview li a").each(function(){
+		if($(this).attr('href').indexOf(current2) != -1) {
+			if(current2 != "board") {
+				$(this).addClass("active");
+			}			
+		}else{
+			$(this).removeClass("active");
+		}
+	});
+});
+</script>
