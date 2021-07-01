@@ -51,10 +51,10 @@ public class LoginController {
 			if(authorities.stream().filter(o -> o.getAuthority().equals("ROLE_ANONYN")).findAny().isPresent()) {
 				levels = "ROLE_ANONYMOUS";
 			}
-			if(authorities.stream().filter(o -> o.getAuthority().equals("ROLE_USER")).findAny().isPresent()) {
+			if(authorities.stream().filter(o -> o.getAuthority().equals("ROLE_USER")).findAny().isPresent() ) {
 				levels = "ROLE_USER";
 			}
-			if(authorities.stream().filter(o -> o.getAuthority().equals("ROLE_ADMIN")).findAny().isPresent()) {
+			if( authorities.stream().filter(o -> o.getAuthority().equals("ROLE_ADMIN")).findAny().isPresent()) {
 				levels = "ROLE_ADMIN";
 			}
 			//람다식은 외국코드 분석할때 필요
@@ -66,7 +66,7 @@ public class LoginController {
 			MemberVO memberVO = memberService.readMember(userid);
 			session.setAttribute("session_username", memberVO.getUser_name());
 		}
-		rdat.addFlashAttribute("mag","로그인");	
+		rdat.addFlashAttribute("msg","로그인");	
 		return "redirect:/";
 	}
 }

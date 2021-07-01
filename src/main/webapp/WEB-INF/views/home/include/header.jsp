@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -34,42 +35,13 @@
 	
 }
 </style>
-<script>
-// 메인페이지 전용 슬라이드 호출 부분
-$(document).ready(function() {
-	// 위에서 선언한 함수|변수 사용(아래)
-	//여기서 함수호출(실행)
-	slideAuto = setTimeout('play_w("right")', 3000);//3초마다 play_w함수 실행
-	var slidePlayHide = setTimeout(function(){
-		$('.rollplay').css('display','none');
-	},3000);//3초 후에 rollplay클래스 플레이버튼 영역을 숨김
-	// 3개의 슬라이드 버튼 클랙 액션처리
-	$('.rollstop a').click(function(){
-		// this는 클릭한 본인 태그를 말합니다.
-		$(this).parent().hide();//현재 stop버튼 숨김.
-		$('.rollplay').css('display','inline-block');
-		if(slideAuto) {
-			clearTimeout(slideAuto);//slideAuto변수가 없다면, play_w함수를 실행 중지.
-		}
-	});
-	$('.rollplay a').click(function(){
-		$(this).parent().hide();// a태그의 부모 rollplay영역 입니다.
-		$('.rollstop').css('display','inline-block');
-		play_w('right');//3초마다 슬라이드 이미지 액션일 발생합니다.
 
-	});
-	$('.rollingbtn li.seq a').each(function(index){
-		$(this).click(function(){
-			$('.rollplay').hide();
-			$('.rollstop').css('display','inline-block');
-			if(slideAuto) {
-				clearTimeout(slideAuto);//슬라이드 중지
-			}
-			play_w(index);//슬라이드 재생 : 단 시작위치는 클릭한 index부터 무한반복
-		});
-	});
-});
+<script>
+if("${msg}" != "") {
+	alert("${msg}가(이) 성공하였습니다.");
+}
 </script>
+
 </head>
 <body>
 <!-- 헤더에서푸터까지 -->
@@ -90,12 +62,22 @@ $(document).ready(function() {
 			</p>
 			<div class="header_cont">
 				<ul class="util clear">
-					<li><a href="/login_form">로그인</a></li>
-					<li><a href="/join_form">회원가입</a></li>
-					<!-- 로그인 후 보이는 메뉴(아래) -->
-					<li><a href="#">OOO님 환영합니다.</a></li>
-					<li><a href="mypage.html">마이페이지</a></li>
-					<li><a href="../admin">AdminLTE</a></li>
+				<c:choose>
+					<c:when test="${session_enabled eq 'true' }">
+						<!-- 로그인 후 보이는 메뉴(아래) -->
+						<li><a href="#">${session_username}"환영합니다.</a></li>
+						<li><a href="/logout">로그아웃</a></li>
+						<li><a href="/member/mypage_form">마이페이지</a></li>
+						<!-- ROLE_AMNIN 권한만 daminLTE에 가능하게 조건추가 -->
+						<c:if test="${session_levels eq 'ROLE_ADMIN'}">
+							<li><a href="/admin">AdminLTE</a></li>
+						</c:if>						
+					</c:when>
+					<c:otherwise>
+						<li><a href="/login_form">로그인</a></li>
+						<li><a href="/join_form">회원가입</a></li>
+					</c:otherwise>
+				</c:choose>														
 				</ul>	
 				<nav>
 				<ul class="gnb clear">

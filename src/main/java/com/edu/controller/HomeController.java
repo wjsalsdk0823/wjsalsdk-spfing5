@@ -1,12 +1,21 @@
 package com.edu.controller;
 
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //외부 라이브러리(모듈) 사용 = import
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.edu.service.IF_MemberService;
+import com.edu.vo.MemberVO;
 
 
 /**
@@ -29,6 +38,30 @@ public class HomeController {
 	 * return 값으로 view(jsp)를 선택해서 작업한 결과를 변수로 담아서 화면에 전송 후 결과를 표시 (렌더링) 합니다.
 	 * 폼 전송시 post(자료숨김), get(자료노출)
 	 */
+	@Inject
+	private IF_MemberService memberService;
+	//마이페이지 회원정보 수정 POST방식
+	@RequestMapping(value = "/member/mypage", method = RequestMethod.POST)
+	public String mypage(MemberVO memberVO, RedirectAttributes rdat) throws Exception {
+		if(!memberVO.getUser_pw().isEmpty()) {
+			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			String rawPassword = memberVO.getUser_pw();
+			memberVO.setUser_pw(passwordEncoder.encode(rawPassword));
+		}
+		memberService.updateMember(memberVO);
+		rdat.addFlashAttribute("msg","회원정보수정");//
+		return "redirect:/member/mypage_form";
+	}
+	//마이페이지 폼호출 GET방식
+	@RequestMapping(value = "/member/mypage_form", method = RequestMethod.GET)
+	public String mypage_form(HttpServletRequest request, Model model) throws Exception {
+		//로그인 한 사죵자 세션을 session_userid로 memberService의 readMember를 호출
+		//jsp에서 발생된 세션을 가져오려고 하기 때문에 HttpServletRequest 객체가 사용
+		HttpSession session = request.getSession();
+		String user_id = (String) session.getAttribute("session_userid");
+		model.addAttribute("memberVO", memberService.readMember(user_id));
+		return "home/member/mypage";
+	}
 	//사용자단 로그인 GET 로그인POST처리는 컨트롤러에서 하지 않고 스프링시큐리티로 처리
 	@RequestMapping(value = "/login_form", method = RequestMethod.GET)
 	public String login_form() throws Exception {
