@@ -13,9 +13,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.edu.service.IF_BoardTypeService;
 import com.edu.vo.BoardTypeVO;
@@ -86,7 +88,19 @@ public class AspectAdvice {
 		Object result = pjp.proceed();//여기서 조인포인트가 실행됩니다.
 		return result;
 	}
-	
+	//이 메서드는 컨트롤러에서 Exception 발생했을때 
+	@ExceptionHandler(Exception.class)
+	public ModelAndView errorModelAndView(Exception ex, HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView();
+		//이전페이지로 돌아가기용 데이터 생성
+		String referer = request.getHeader("Referer");
+		request.getSession().setAttribute("session_prevPage", referer);
+		//--------------------------------------------
+		//컨트롤러에서 받은 Exception을 ModelAndView로 전달 아래
+		modelAndView.addObject("exception", ex);
+		modelAndView.setViewName("home/error/error_spring");//return String .jsp생략
+		return modelAndView; 
+	}
 	//이 메서드는 컨트롤러로 메서드가 실행 전에 값을 생성해서 model객체에 담아서 jsp로 보냄
 	//위 컨트롤러 어드바이스를 이용해서 컨트롤러의 모든 메서드가 실행되기 전 호출만되면 아래 메서드 자동실행
 	@ModelAttribute("listBoardTypeVO")

@@ -63,7 +63,7 @@
                 <c:out value="${memberVO.levels}" />
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">가입일</label>
+                <label for="exampleInputPassword1">로그인여부</label>
                 <br>
                 <c:out value="${memberVO.reg_date}" />
               </div>

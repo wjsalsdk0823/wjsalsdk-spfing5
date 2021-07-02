@@ -38,8 +38,41 @@ public class HomeController {
 	 * return 값으로 view(jsp)를 선택해서 작업한 결과를 변수로 담아서 화면에 전송 후 결과를 표시 (렌더링) 합니다.
 	 * 폼 전송시 post(자료숨김), get(자료노출)
 	 */
+	
+	
 	@Inject
 	private IF_MemberService memberService;
+	
+	//404파일 에러 처리 get 호출 추가
+	@RequestMapping(value = "/home/error/error_404", method = RequestMethod.GET)
+	public String error_404() {
+		return "home/error/error_404";
+	}
+	//회원가입 처리 호출POST방식
+	@RequestMapping(value = "/join", method = RequestMethod.POST)
+	public String join(MemberVO memberVO, RedirectAttributes rdat) throws Exception {
+		//rawpassword암호를 스프링시큐리티로 인코딩 합니다 아래
+		String rawPassword = memberVO.getUser_pw();
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		memberVO.setUser_pw(passwordEncoder.encode(rawPassword));
+		memberService.insertMember(memberVO);
+		rdat.addFlashAttribute("msg", "회원가입");
+		return "redirect:/login_form";//페이지 리다이렉트로 이동
+	}
+	//회원가입폼 호출Get방식
+	@RequestMapping(value = "/join_form", method = RequestMethod.GET)
+	public String join_form() throws Exception {
+		
+		return "home/join";
+	}
+	//마이페이지에서 회원탈퇴
+	@RequestMapping(value = "/member/mypage_leave", method = RequestMethod.POST)
+	public String mypage_leave(MemberVO memberVO, RedirectAttributes rdat) throws Exception {
+		memberService.updateMember(memberVO);
+		rdat.addFlashAttribute("msg","회원탈퇴");
+		return "redirect:/logout";
+	}
+	
 	//마이페이지 회원정보 수정 POST방식
 	@RequestMapping(value = "/member/mypage", method = RequestMethod.POST)
 	public String mypage(MemberVO memberVO, RedirectAttributes rdat) throws Exception {
