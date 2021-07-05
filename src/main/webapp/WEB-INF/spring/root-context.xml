@@ -24,7 +24,7 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- 알리아스Alias(별명)dataSource로 만듭니다.이유?여러개의 DB와 호환되게 만들게됩니다.
 	       오라클지원,Mysql,Hsql등 여러 DB서버와 호환되게 만드는데 필요(아래)	 -->
-	 <alias name="dataSource-${DbType}" alias="dataSource"/>
+	<alias name="dataSource-${DbType}" alias="dataSource"/>
 	 <!-- 로컬 (PC) Hsql용 - 헤로쿠클라우드에 배포용 드라이버 설정(아래) -->
 	
 	<!-- /embeded/hsql_file.db자동으로 생성함 생성문장스크립트 -->
