@@ -187,7 +187,13 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.9.7</version>
 		</dependency>
-		
+		<!-- Hsql자바기반DB 모듈 추가 -->
+		<!-- hsql 데이터베이스 사용 -->
+		<dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.4.1</version>
+        </dependency>		
 	</dependencies>
     <build>
     	<defaultGoal>install</defaultGoal>
