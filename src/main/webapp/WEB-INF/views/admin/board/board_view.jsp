@@ -325,7 +325,8 @@ var replyList = function() {
 				printPagingList(result.pageVO, ".pagination");
 			}
 		},
-		error:function() {
+		error:function(result) {
+			alert(JSON.stringify(result.responseText));
 			alert("RestAPI서버가 작동하지 않습니다.");
 		}
 	});
