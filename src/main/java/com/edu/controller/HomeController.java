@@ -1,5 +1,6 @@
 package com.edu.controller;
 
+import java.io.File;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -16,10 +17,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.edu.service.IF_BoardService;
 import com.edu.service.IF_MemberService;
+import com.edu.util.CommonUtil;
+import com.edu.vo.AttachVO;
 import com.edu.vo.BoardVO;
 import com.edu.vo.MemberVO;
 import com.edu.vo.PageVO;
@@ -51,7 +56,81 @@ public class HomeController {
 	private IF_MemberService memberService;
 	@Autowired
 	private IF_BoardService boardService;
-
+	@Inject
+	private CommonUtil commonUtil;
+	//@RequestMapping
+	//public 뷰단 jsp파일명리턴형식 콜백함수
+	//return 파일명
+	
+	//게시물 삭제 처리 호출 POST추가
+	@RequestMapping(value="/home/board/board_delete",method=RequestMethod.POST)
+	public String board_delete(@RequestParam("bno")Integer bno,RedirectAttributes rdat) throws Exception{
+		//
+		List<AttachVO> delFiles = boardService.readAttach(bno);
+		//테이블 1개 레코드 삭제처리	
+		boardService.deleteBoard(bno);
+		//첨부파일 있으면 삭제
+		for(AttachVO file:delFiles) {
+			File target = null;
+		} 
+		rdat.addFlashAttribute("msg", "게시물 삭제");
+		return "redirect:/home/board/board_list";
+	}
+	//게시물 상세보기 호출 GET
+	@RequestMapping(value="/home/board/board_view",method=RequestMethod.GET)
+	public String board_view(Model model,@RequestParam("bno")Integer bno,@ModelAttribute("pageVO")PageVO pageVO) throws Exception {
+		//첨부파일내용 가져오기
+		List<AttachVO> listAttachVO = boardService.readAttach(bno);
+		String[] save_file_names = new String[listAttachVO.size()];
+		String[] real_file_names = new String[listAttachVO.size()];
+		int index = 0;
+		for(AttachVO file:listAttachVO) {
+			save_file_names[index] = file.getSave_file_name();
+			real_file_names[index] = file.getReal_file_name();
+			index = index + 1;
+		}
+		BoardVO boardVO = boardService.readBoard(bno);
+		boardVO.setSave_file_names(save_file_names);
+		boardVO.setReal_file_names(real_file_names);	
+		//db테이블 데이터 가져오기
+		model.addAttribute("boardVO", boardVO);
+		model.addAttribute("checkImgArray", commonUtil.getCheckImgArray());
+		return "home/board/board_view"; 
+	}
+	//게시물 등록처리 호출 POST추가
+	@RequestMapping(value="/home/board/board_insert",method=RequestMethod.POST)
+	public String board_insert(RedirectAttributes rdat,@RequestParam ("file")MultipartFile[] files,BoardVO boardVO) throws Exception {
+		//첨부파일 처리
+		String[] save_file_names = new String[files.length];
+		String[] real_file_names = new String[files.length];
+		int index = 0;
+		for(MultipartFile file:files) {
+			//첨부파일 존재하면 실행조건
+			if(file.getOriginalFilename()!="") {
+				real_file_names[index] = file.getOriginalFilename();
+				save_file_names[index] = commonUtil.fileUpload(file);
+			}
+			index = index + 1;
+		}
+		//Attach 테이블 처리할 첨부파일 가상변수  값을 입력
+		boardVO.setSave_file_names(save_file_names);
+		boardVO.setReal_file_names(real_file_names);
+		//
+		String rawTitle = boardVO.getTitle();
+		String rawContent = boardVO.getContent();
+		boardVO.setTitle (commonUtil.unScript(rawTitle));
+		boardVO.setContent(commonUtil.unScript(rawContent));
+		//DB테이블 처리
+		boardService.insertBoard(boardVO);
+		rdat.addFlashAttribute("msg", "게시물등록");
+		return "redirect:/home/board/board_list";
+	}
+	//게시물 등록 폼 호출 GET 추가
+	@RequestMapping(value="/home/board/board_insert_form",method=RequestMethod.GET)
+	public String board_insert_form() throws Exception {
+		
+		return "/home/board/board_insert";
+	}
 	//게시물 리스트 페이지 호출 GET 추가
 		@RequestMapping(value="/home/board/board_list",method=RequestMethod.GET)
 		public String board_list(@ModelAttribute("pageVO") PageVO pageVO, Model model) throws Exception {
@@ -79,6 +158,8 @@ public class HomeController {
 		String rawPassword = memberVO.getUser_pw();
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		memberVO.setUser_pw(passwordEncoder.encode(rawPassword));
+		//사용자레벨은 UI단에서 보내는 값 무시하고 강제로 입력
+		memberVO.setLevels("ROLE_USER");
 		memberService.insertMember(memberVO);
 		rdat.addFlashAttribute("msg", "회원가입");
 		return "redirect:/login_form";//페이지 리다이렉트로 이동

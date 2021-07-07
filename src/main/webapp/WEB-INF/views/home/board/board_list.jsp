@@ -2,22 +2,11 @@
     pageEncoding="UTF-8"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="../include/header.jsp" %>
-<!-- 게시판용 CSS 임포트 -->
-<link rel="stylesheet" href="/resources/home/css/board.css">
 
 <!-- 메인콘텐츠영역 -->
     <div id="container">
 		<!-- 메인상단위치표시영역 -->
-		<div class="location_area customer">
-			<div class="box_inner">
-				<h2 class="tit_page">스프링 <span class="in">in</span> 자바</h2>
-				<p class="location">고객센터 <span class="path">/</span> 공지사항</p>
-				<ul class="page_menu clear">
-					<li><a href="#" class="on">공지사항</a></li>
-					<li><a href="#">문의하기</a></li>
-				</ul>
-			</div>
-		</div>	
+		<%@ include file="./board_header.jsp" %>
 		<!-- //메인상단위치표시영역 -->
 
 		<!-- 메인본문영역 -->
@@ -71,7 +60,7 @@
 				}
 			</style>
 			<!-- 페이징처리영역 -->
-			<div class="pagination">
+			<div class="pagination justify-content-center">
 				<c:set var="disabled" value="${pageVO.prev?'':'disabled'}"/>				
 				<a href="/home/board/board_list?page=${pageVO.startPage-1}&search_type=${pageVO.search_type}" class="prevpage  pbtn ${disabled}">
 				<img src="/resources/home/img/btn_prevpage.png" alt="이전 페이지로 이동">
@@ -88,7 +77,22 @@
 			</div>
 			<!-- //페이징처리영역 -->
 			<p class="btn_line">
-				<a href="board_write.html" class="btn_baseColor">등록</a>
+			<!-- 등록버튼은 로그인한 사용자만 허용 -->
+			<c:if test="${session_enabled}">
+			<!-- 게시판이 공지사항일때는 관리자만 사용가능 조건 -->
+				<!-- 공지사항이 아닐때, 일반 사용자일때1차조건 -->
+			<c:choose>
+				<c:when test="${session_levels eq 'ROLE_ADMIN'}">
+					<a href="/home/board/board_insert_form" class="btn_baseColor">등록</a>	
+				</c:when>
+				<c:otherwise>
+					<c:if test="${session_board_type ne 'notice'}">
+						<a href="/home/board/board_insert_form" class="btn_baseColor">등록</a>	
+					</c:if>		
+				</c:otherwise>
+			</c:choose>		
+								
+			</c:if>				
 			</p>
 		</div>
 		<!-- //메인본문영역 -->
