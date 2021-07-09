@@ -40,6 +40,9 @@
 if("${msg}" != "") {
 	alert("${msg}가(이) 성공하였습니다.");
 }
+if("${msgError}" != "") {
+	alert("${msgError}");
+}
 </script>
 
 </head>

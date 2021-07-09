@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -48,6 +50,7 @@ public class CommonUtil {
 	@Inject
 	private IF_BoardDAO boardDAO;
 	
+
 	//첨부파일 업로드/다운로드/삭제/인서트/수정에 모두 사용될 저장경로 1개 지정해서 전역으로 사용
 	@Resource(name="uploadPath")
 	private String uploadPath;			
