@@ -47,7 +47,7 @@
             </c:forEach>
             </li>
         </ul>
-        <p class="btn_line text_right">
+        <p class="btn_line txt_right">
             <a href="/home/board/board_list?page=${pageVO.page}&search_type=${pageVO.search_type}" class="btn btn-default">목록</a>
             <button type="button" id="btn_delete" class="btn btn-danger">삭제</button>
             <button type="button" id="btn_update" class="btn btn-warning">수정</button>
