@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -29,6 +30,15 @@ public class LoginController {
 	@Inject
 	private IF_MemberService memberService;
 
+	//홈컨트롤러에 있던 로그인 폼을 네아로 로그인 URL 생성때문에 이동
+	@RequestMapping(value="/login_form", method=RequestMethod.GET)
+	public String login_form(Model model,HttpSession session) throws Exception {
+		
+		String naverAuthUrl = "";
+		
+		model.addAttribute("url", null);
+		return "home/login";//.jsp생략
+	}
 	@RequestMapping(value="/login_success", method=RequestMethod.GET)
 	public String login_success(HttpServletRequest request, RedirectAttributes rdat) throws Exception {
 		

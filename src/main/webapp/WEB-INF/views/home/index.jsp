@@ -2,6 +2,16 @@
     pageEncoding="UTF-8"%>
 
 <%@ include file="./include/header.jsp" %>	
+<<style>
+.latest_img:hover {opacity:1.0;}
+.latest_img {
+	height:250px;overflow:hidden;opacity:0.7;
+}
+/* 갤러리,공지사랑 게시물 제목 자르기 아래*/
+.title_crop {
+	white-space: nowrap;overflow:hidden;text-overflow: ellipsis;
+}
+</style>
 <script>
 // 메인페이지 전용 슬라이드 호출 부분
 $(document).ready(function() {
@@ -48,21 +58,21 @@ $(document).ready(function() {
                     <li class="imglist0">
                         <div class="roll_content">
                             <a href="javascript:;">
-							<p class="roll_txtline">1OOOO OOOOOOOOO OOOOOOOOO OOOOO</p>
+							<p class="roll_txtline"></p>
 							</a>
                         </div>
                     </li>
                     <li class="imglist1">
                         <div class="roll_content">
                             <a href="javascript:;">
-							<p class="roll_txtline">2OOOO OOOOOOOOO OOOOOOOOO OOOOO</p>
+							<p class="roll_txtline"></p>
 							</a>
                         </div>
                     </li>
                     <li class="imglist2">
                         <div class="roll_content">
                             <a href="javascript:;">
-							<p class="roll_txtline">3OOOO OOOOOOOOO OOOOOOOOO OOOOO</p>
+							<p class="roll_txtline"></p>
 							</a>
                         </div>
                     </li>
@@ -86,27 +96,45 @@ $(document).ready(function() {
 	
 		<!-- 갤러리최근게시물영역 -->
 		<div class="about_area">
-			<h2>겔러리 최근 게시물 <b>TOP 3</b></h2>
+			<h2><a href="/home/board/board_list?board_type=gallery&search_keyword=">
+			갤러리 최근 게시물 <b>TOP 3</b>
+			</a></h2>
 			<div class="about_box">
 				<ul class="place_list box_inner clear">
-					<li><a href="#" onclick="$('.popup_base').css('height',$(document).height());$('.contact_pop').show();">
-							<img class="img_topplace" src="/resources/home/img/no_image.png" alt="OOOO OOOOO" style="opacity:0.7;"/>
-							<h3>OOOO OOOOO</h3>
-							<p class="txt">OOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOO!</p>
-							<span class="view">VIEW</span></a>
+				<c:forEach var="galleryVO" items="${latestGallery}">
+					<li><a href="/home/board/board_view?bno=${galleryVO.bno}&page=1&board_type=gallery&" >					
+						<div class="latest_img">
+						<c:choose>
+							<c:when test="${empty galleryVO.save_file_names[0]}">
+								<img class="img_topplace" src="/resources/home/img/no_image.png" alt="OOOO OOOOO"/>
+							</c:when>
+							<c:otherwise>
+								<img class="img_topplace" src="/image_preview?save_file_name=${galleryVO.save_file_names[0]}" alt="OOOO OOOOO" />
+							</c:otherwise>
+						</c:choose>		
+							</div>																
+							<h3 class="title_crop">							
+								<!-- css로 글자수 자르기 처리 -->
+									${galleryVO.title}
+								</h3>
+							
+							<p class="txt">
+								<!-- jstl로 글자수 자르기 처리 -->
+							<c:choose>
+								<c:when test="${fn:length(galleryVO.title) gt 52}">
+									${fn:substring(galleryVO.title,0,50)}...
+								</c:when>
+								<c:otherwise>
+									${galleryVO.content}
+								</c:otherwise>
+							</c:choose>
+							</p>
+							<span class="view">VIEW</span>
+							
+						</a>
 					</li>
-					<li><a href="#" onclick="$('.popup_base').css('height',$(document).height());$('.space_pop').show();">
-							<img class="img_topplace" src="/resources/home/img/no_image.png" alt="OOOO OOOOO" style="opacity:0.7;"/>
-							<h3>OOOO OOOOO</h3>
-							<p class="txt">OOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOO.</p>
-							<span class="view">VIEW</span></a>
-					</li>
-					<li><a href="#" onclick="$('.popup_base').css('height',$(document).height());$('.program_pop').show();">
-							<img class="img_topplace" src="/resources/home/img/no_image.png" alt="OOOO OOOOO" style="opacity:0.7;"/>
-							<h3>OOOO OOOOO</h3>
-							<p class="txt">OOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOO</p>
-							<span class="view">VIEW</span></a>
-					</li>
+				</c:forEach>
+									
 				</ul>
 			</div>
 		</div>
@@ -121,13 +149,19 @@ $(document).ready(function() {
 					<a href="javascript:;">전화 상담 신청</a>
 				</p>
 				<div class="bbs_line">
-					<h3>NOTICE</h3>
+					<h3><a href="/home/board/board_list?board_type=notice&search_keyword=">
+					NOTICE
+					</a></h3>
 					<ul class="notice_recent">
-						<li><a href="javascript:;">OOOO OOOOO (스프링OOOO OOOOO)</a></li>
-						<li><a href="javascript:;">OOOO OOOOOOOOO OOOOO</a></li>
-						<li><a href="javascript:;">OOOO OOOOO/OOOO OOOOO</a></li>
-						<li><a href="javascript:;">OOOO OOOOO OPEN! (스프링정보, OOOO OOOOO)</a></li>
-						<li><a href="javascript:;">OOOO OOOOO 서비스 점검 안내</a></li>
+					<c:forEach var="noticeVO" items="${latestNotice}">
+						<li>
+						<a href="/home/board/board_view?bno=${noticeVO.bno}&page=1&board_type=notice">
+						${noticeVO.title}
+						</a>
+						</li>
+					</c:forEach>
+						
+					
 					</ul>
 				</div>
 			</div>

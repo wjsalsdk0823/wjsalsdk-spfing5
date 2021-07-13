@@ -206,9 +206,21 @@
 		    <artifactId>spring-context-support</artifactId>
 		    <version>${org.springframework-version}</version>
 		</dependency>
-	</dependencies>
+		<!-- 네아로 OAuth2.0모듈 추가 -->
+		<dependency>
+			<groupId>com.github.scribejava</groupId>
+			<artifactId>scribejava-core</artifactId>
+			<version>2.8.1</version>
+		</dependency>
+		<!-- naver 리턴값 json파싱 -->
+		<dependency>
+		    <groupId>com.googlecode.json-simple</groupId>
+		    <artifactId>json-simple</artifactId>
+		    <version>1.1</version>
+		</dependency>
+		
+	</dependencies>     
 	
-      
     <build>
     	<defaultGoal>install</defaultGoal>
         <directory>${basedir}/target</directory>
