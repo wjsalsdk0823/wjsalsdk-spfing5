@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ include file="./include/header.jsp" %>	
-<<style>
+<style>
 .latest_img:hover {opacity:1.0;}
 .latest_img {
 	height:250px;overflow:hidden;opacity:0.7;
