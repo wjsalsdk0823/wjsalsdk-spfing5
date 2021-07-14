@@ -69,9 +69,12 @@ if("${msgError}" != "") {
 				<c:choose>
 					<c:when test="${session_enabled eq 'true' }">
 						<!-- 로그인 후 보이는 메뉴(아래) -->
-						<li><a href="#">${session_username}"환영합니다.</a></li>
+						<li><a href="#">${session_username}"님 환영합니다.</a></li>
 						<li><a href="/logout">로그아웃</a></li>
+						<c:if test="${session_login_type ne 'sns'}">
 						<li><a href="/member/mypage_form">마이페이지</a></li>
+						</c:if>
+						
 						<!-- ROLE_AMNIN 권한만 daminLTE에 가능하게 조건추가 -->
 						<c:if test="${session_levels eq 'ROLE_ADMIN'}">
 							<li><a href="/admin">AdminLTE</a></li>
