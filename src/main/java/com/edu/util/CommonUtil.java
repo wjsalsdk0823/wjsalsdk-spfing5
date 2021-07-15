@@ -207,4 +207,15 @@ public class CommonUtil {
 		File target =  new File(makeFolder,user_id+".png");
 		FileCopyUtils.copy(fileData, target);
 	}
+
+	public void profile_delete(String user_id, HttpServletRequest request) {
+		// 프로필 이미지가 프로필 폴더에 존재하면 삭제하는 로직
+		String folderPath = request.getServletContext().getRealPath("/resources/profile");
+		File target = new File("","");
+		if(target.exists()) {
+			System.out.println("debug119 " + target);
+			target.delete();
+		}
+		
+	}
 }

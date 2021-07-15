@@ -37,14 +37,17 @@
         <!-- 첨부파일을 전송할때 enctype=필수 없으면, 첨부파일이 전송X -->
         <form name="form_write" action="/admin/member/member_insert" method="post" enctype="multipart/form-data">
           <div class="card-body">
-          
+                    
+              <img style="width: 120px;height:120px;" onerror="this.src='/resources/admin/dist/img/default-150x150.png'" src ="/resources/profile/${memberVO.user_id}.png">
+            <div class="card-body">
+            
             <!-- 사용자 프로필 이미지 등록 태그추가 -->
             <div class="form-group">
                 <label for="exampleInputFile">사용자프로필</label>
-                <div class="input-group">
+                <div class="input-group">               
                   <div class="custom-file">
                     <input name="file" type="file" class="custom-file-input" id="file0">
-                    <label class="custom-file-label" for="file0">파일선택</label>
+                   <label class="custom-file-label" for="file0">파일선택(*png이미지만가능)</label>
                   </div>
                 </div>
               </div>
