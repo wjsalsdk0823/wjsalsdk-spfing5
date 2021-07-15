@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
@@ -193,5 +194,17 @@ public class CommonUtil {
 		File target = new File(uploadPath, saveFileName);
 		FileCopyUtils.copy(fileData, target);
 		return saveFileName;
+	}
+
+	public void profile_upload(String user_id, HttpServletRequest request, MultipartFile file) throws IOException {
+		// TODO 프로필이미지는 보안이 필요한 폴더가 아닌, resources폴더에 업로드 처리. 서버의 경로필요
+		String folderPath = request.getServletContext().getRealPath("/resources/profile");
+		File makeFolder = new File(folderPath);
+		if(!makeFolder.exists()) {
+			makeFolder.mkdir();
+		}
+		byte[] fileData = file.getBytes();
+		File target =  new File(makeFolder,user_id+".png");
+		FileCopyUtils.copy(fileData, target);
 	}
 }
