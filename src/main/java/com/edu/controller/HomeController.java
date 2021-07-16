@@ -337,7 +337,7 @@ public class HomeController {
 		pageVO.setQueryPerPageNum(5);//공지사항5
 		pageVO.setBoard_type("notice");
 		model.addAttribute("latestNotice", boardService.selectBoard(pageVO));
-		return "home/index";//확장자가 생략 .jsp가 생략되어 있음.
+		return "index.tiles";
 	}
 	
 }
