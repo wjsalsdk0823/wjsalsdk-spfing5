@@ -271,7 +271,7 @@ public class HomeController {
 	@RequestMapping(value="/join_form",method=RequestMethod.GET)
 	public String join_form() throws Exception {
 		
-		return "home/join";//.jsp생략
+		return "join.tiles";//.jsp생략
 	}
 	//마이페이지에서 회원탈퇴 POST방식 처리만.
 	@RequestMapping(value="/member/mypage_leave", method=RequestMethod.POST)
