@@ -209,12 +209,11 @@ public class CommonUtil {
 	}
 
 	public void profile_delete(String user_id, HttpServletRequest request) {
-		// 프로필 이미지가 프로필 폴더에 존재하면 삭제하는 로직
+		// TODO 프로필 이미지가 프로필폴더에 존재하면 삭제하는 로직
 		String folderPath = request.getServletContext().getRealPath("/resources/profile");
-		File target = new File("","");
+		File target = new File(folderPath,user_id+".png");
 		if(target.exists()) {
-			System.out.println("debug119 " + target);
-			target.delete();
+			target.delete();//프로필파일이 실제로 지워짐.
 		}
 		
 	}
